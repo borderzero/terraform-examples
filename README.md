@@ -41,11 +41,11 @@ Once you create your Border0 account and API [Member Token](https://portal.borde
 
 Os Environment Variables
 ```
-export TF_VAR_BORDER0_TOKEN="ey...9Iw"
+export BORDER0_TOKEN="ey...9Iw"
 ```
 or 
 
-Update the ``variables.tf`` file variable ``MY_BORDER0_TOKEN`` to your Border0 API [Member Token](https://portal.border0.com/organizations/current?tab=new_token)
+Update the ``variables.tf`` file variable ``BORDER0_TOKEN`` to your Border0 API [Member Token](https://portal.border0.com/organizations/current?tab=new_token)
 
 #### 4. AWS Credentials setup
 

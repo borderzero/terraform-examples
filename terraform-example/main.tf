@@ -8,7 +8,6 @@ module "connector" {
   source        = "./connector"
   default_tags  = local.default_tags
   prefix        = var.prefix
-  border0_token = var.border0_token
   access-email  = var.access-email
 
   # VPC, subnets, and security groups from infrastructure
@@ -20,7 +19,6 @@ module "sockets" {
   source        = "./sockets"
   default_tags  = local.default_tags
   prefix        = var.prefix
-  border0_token = var.border0_token
 
   # ECS, RDS, and EC2 instances from infrastructure
   ecs           = module.infrastructure.ecs
