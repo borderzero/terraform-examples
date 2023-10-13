@@ -167,7 +167,7 @@ EOF
 
 # IAM Role
 resource "aws_iam_role" "border0-connector-role" {
-  name = "border0-connector-role"
+  name = var.prefix != "" ? "${var.prefix}-connector-role" : "Border0-example-connector-role"
 
   assume_role_policy = jsonencode({
     "Version" : "2012-10-17",

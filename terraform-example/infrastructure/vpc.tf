@@ -7,6 +7,23 @@ resource "aws_vpc" "main" {
   )
 }
 
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
+# resource "aws_subnet" "private_subnet_1" {
+#   count             = 1
+#   vpc_id            = aws_vpc.main.id
+#   cidr_block        = element(var.subnet_cidrs, count.index)
+#   availability_zone = element(data.aws_availability_zones.available.names, count.index)
+
+#   tags = {
+#     Name = "private-subnet-1"
+#   }
+# }
+
+
+
 resource "aws_subnet" "public_subnet" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.10.0/24"
@@ -20,7 +37,7 @@ resource "aws_subnet" "public_subnet" {
 resource "aws_subnet" "private_subnet_1" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.1.0/24"
-  availability_zone = "${data.aws_region.current.name}a"  # First AZ
+  availability_zone = element(data.aws_availability_zones.available.names, 0) # First AZ
   tags = merge(
     { Name = "${var.prefix}-private-subnet-1" },
     var.default_tags,
@@ -30,7 +47,7 @@ resource "aws_subnet" "private_subnet_1" {
 resource "aws_subnet" "private_subnet_2" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.2.0/24"
-  availability_zone = "${data.aws_region.current.name}b"  # Second AZ
+  availability_zone = element(data.aws_availability_zones.available.names, 1) # Second AZ
   tags = merge(
     { Name = "${var.prefix}-private-subnet-2" },
     var.default_tags,

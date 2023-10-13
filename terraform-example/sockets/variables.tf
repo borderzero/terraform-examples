@@ -20,17 +20,17 @@ variable "border0_policy_id" {
 
 variable "ecs" {
   description = "ECS Cluster and Service names"
-  type = map(string)
+  type        = map(string)
 }
 
 variable "rds_instance" {
   description = "RDS Instance"
-  type = map(string)
+  type        = map(string)
 }
 
 variable "ec2_instances" {
   description = "EC2 Instances"
-  type = map(map(string))
+  type        = map(map(string))
 }
 
 data "aws_region" "current" {}

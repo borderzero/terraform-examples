@@ -18,7 +18,7 @@ resource "aws_ecs_task_definition" "ecs-ubuntu-container" {
   execution_role_arn = aws_iam_role.ecs_execution_role.arn
   task_role_arn      = aws_iam_role.ecs_task_role.arn
   container_definitions = jsonencode([{
-    name    = "ubuntu-container"
+    name = var.prefix != "" ? "${var.prefix}-container" : "Border0-example-container"
     image   = "ubuntu:latest"
     command = ["tail", "-f", "/dev/null"]
     linuxParameters = {
@@ -52,8 +52,9 @@ resource "aws_ecs_service" "ecs-service1" {
 }
 
 
+# IAM Role for ECS Task Execution
 resource "aws_iam_role" "ecs_execution_role" {
-  name = "ecs-execution-role"
+  name = var.prefix != "" ? "${var.prefix}-ecs-exec-role" : "Border0-example-ecs-exec-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -69,8 +70,9 @@ resource "aws_iam_role" "ecs_execution_role" {
   })
 }
 
+# IAM Role for ECS Task
 resource "aws_iam_role" "ecs_task_role" {
-  name = "ecs_task_role"
+  name = var.prefix != "" ? "${var.prefix}-ecs-task-role" : "Border0-example-ecs-task-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -87,15 +89,32 @@ resource "aws_iam_role" "ecs_task_role" {
 }
 
 
-# resource "aws_iam_role_policy_attachment" "ecs_execution_role_policy_attachment" {
-#   role       = aws_iam_role.ecs_execution_role.name
-#   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-# }
+resource "aws_iam_role_policy" "ecs_task_role_SSMConsole" {
+  name = "ecs_task_role_SSMConsole"
+  # description = "Grants all access to RDS DB based on AIM auth"
+  role = aws_iam_role.ecs_task_role.name
 
-
-resource "aws_iam_role_policy_attachment" "ecs_task_role_policy_attachment" {
-  role       = aws_iam_role.ecs_task_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  policy = <<EOF
+{
+  "Version" : "2012-10-17",
+  "Statement" : [
+    {
+      "Action" : ["ssm:StartSession", "ssm:TerminateSession", "ssm:ResumeSession"],
+      "Effect" : "Allow",
+      "Resource" : ["arn:aws:ec2:*:*:instance/*", "arn:aws:ecs:*:*:task/*"]
+    },
+    {
+      "Action" : ["ssm:UpdateInstanceInformation"],
+      "Effect" : "Allow",
+      "Resource" : "*"
+    },
+    {
+      "Action" : ["ssmmessages:CreateControlChannel", "ssmmessages:CreateDataChannel", "ssmmessages:OpenControlChannel", "ssmmessages:OpenDataChannel"],
+      "Effect" : "Allow",
+      "Resource" : "*"
+    }
+  ]
 }
-
+EOF
+}
 
