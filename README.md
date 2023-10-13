@@ -64,13 +64,11 @@ export AWS_DEFAULT_REGION="us-west-2"
 more info on terraform aws provider [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
 
 #### 4b. Static Credentials
-You can run terraform with static credentials, if you don't want to supply them on each run, pdate the ``variables.tf`` file with your Border0 API Token, AWS Access Key and Secret
+You can run terraform with static credentials, simply update the ``variables.tf`` file with your Border0 API Token, AWS Access Key and Secret
 <br>Set the following variables:
 - AWS_ACCESS_KEY - AWS Access Key
 - AWS_SECRET_KEY - AWS Secret Key
 - AWS_REGION - AWS Region
-
-Once you have those variables defined uncomment aws profider ``region, access_key, secret_key`` settings in the ``main.tf`` file
 
 
 #### 5. Initialise the Terraform:
