@@ -52,7 +52,7 @@ resource "aws_db_instance" "rds" {
 
 # SSM secret parameter for the connector to consume, will contain RDS credentials
 resource "aws_ssm_parameter" "border0-rds-username" {
-  name        = var.smm-db-username-path
+  name        = local.rds-username-param-path
   description = "Border0 demo Database pass"
   type        = "SecureString"
   depends_on  = [random_password.random-rds-username]
@@ -66,7 +66,7 @@ resource "aws_ssm_parameter" "border0-rds-username" {
   )
 }
 resource "aws_ssm_parameter" "border0-rds-password" {
-  name        = var.smm-db-password-path
+  name        = local.rds-password-param-path
   description = "Border0 demo Database pass"
   type        = "SecureString"
   depends_on  = [random_password.random-rds-password]

@@ -37,7 +37,7 @@ git clone https://github.com/borderzero/terraform-examples.git
 cd terraform-examples
 ```
 #### 3. Border0 Credentials setup
-Once you create your Border0 account and API API [Member Token](https://portal.border0.com/organizations/current?tab=new_token) you can set it up in one of the following ways:
+Once you create your Border0 account and API [Member Token](https://portal.border0.com/organizations/current?tab=new_token) you can set it up in one of the following ways:
 
 Os Environment Variables
 ```

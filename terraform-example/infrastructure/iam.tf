@@ -1,6 +1,6 @@
 # IAM Policy
 resource "aws_iam_policy" "ssm_policy" {
-  name        = "ssm_policy"
+  name = var.prefix != "" ? "${var.prefix}-PartielSMMAllowPolicy" : "Border0-example-PartielSMMAllowPolicy"
   description = "Policy for allowing SSM operations"
 
   policy = jsonencode({
@@ -51,6 +51,6 @@ resource "aws_iam_role_policy_attachment" "ssm_policy_attachment" {
 
 # IAM Instance Profile
 resource "aws_iam_instance_profile" "ec2_profile" {
-  name = "ec2_profile"
+  name = var.prefix != "" ? "${var.prefix}-EC2-profile" : "Border0-example-EC2-profile"
   role = aws_iam_role.ec2_role.name
 }

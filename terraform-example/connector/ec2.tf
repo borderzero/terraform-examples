@@ -22,7 +22,7 @@ resource "aws_instance" "connector_instance" {
   vpc_security_group_ids = [var.allow_all_vpc_id]
   user_data_base64 = base64encode(templatefile("${path.module}/user-data.tpl",
     {
-      border0_connector_token_path = "from:aws:ssm:${var.smm-border0-token-path}"
+      border0_connector_token_path = "from:aws:ssm:${local.connector-token-param-path}"
   }))
 
   metadata_options {
