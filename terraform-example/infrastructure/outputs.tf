@@ -32,7 +32,7 @@ output "rds_instance" {
 
 output "ec2_instances" {
   value = { for idx, instance in aws_instance.ec2_instance : 
-    "instance${format("%02d", idx + 1)}" => {
+    "server${format("%01d", idx + 1)}" => {
       id        = instance.id,
       private_ip = instance.private_ip
     }

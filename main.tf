@@ -10,24 +10,18 @@ terraform {
 }
 
 provider "aws" {
-  # It's better to rely on AWS's built-in credential sourcing mechanisms,
-  # Uncomment the below lines to use static credentials from variables.tf file
-  # region     = var.AWS_REGION
-  # access_key = var.AWS_ACCESS_KEY_ID
-  # secret_key = var.AWS_SECRET_ACCESS_KEY
+  region = var.AWS_REGION != null ? var.AWS_REGION : null
+  access_key = var.AWS_ACCESS_KEY_ID != null ? var.AWS_ACCESS_KEY_ID : null
+  secret_key = var.AWS_SECRET_ACCESS_KEY != null ? var.AWS_SECRET_ACCESS_KEY : null
 }
 
-
 provider "border0" {
-  token = var.BORDER0_TOKEN
+  token = var.BORDER0_TOKEN != null ? var.BORDER0_TOKEN : null
 }
 
 
 module "border0_terraform-example" {
   source = "./terraform-example"
-
-  # we pass the token to border0 provider
-  border0_token = var.BORDER0_TOKEN
 
   # Set this to your email address to allow access to the Border0 policy
   # If not set, the default org wide policy will be the main access controlling policy

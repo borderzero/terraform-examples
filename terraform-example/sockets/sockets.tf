@@ -13,7 +13,7 @@ resource "border0_socket" "connect_to_ecs_with_ssm" {
   }
 
   tags = merge({
-    border0_client_category    = var.prefix != "" ? var.prefix : "Border0-Example",
+    border0_client_category    = "Terraform Example",
     border0_client_subcategory = data.aws_region.current.name,
     border0_client_icon        = "simple-icons:amazonecs",
     provider_type              = "aws",
@@ -47,7 +47,7 @@ resource "border0_socket" "rds" {
     password            = var.rds_instance["password_path"]
   }
   tags = merge({
-    border0_client_category    = var.prefix != "" ? var.prefix : "Border0-Example",
+    border0_client_category    = "Terraform Example",
     border0_client_subcategory = data.aws_region.current.name,
     border0_client_icon        = "simple-icons:amazonrds",
     provider_type              = "aws",
@@ -80,7 +80,7 @@ resource "border0_socket" "ec2-instance" {
     ec2_instance_region = data.aws_region.current.name
   }
   tags = merge({
-    border0_client_category    = var.prefix != "" ? var.prefix : "Border0-Example",
+    border0_client_category    = "Terraform Example",
     border0_client_subcategory = data.aws_region.current.name,
     border0_client_icon        = "simple-icons:amazonec2",
     provider_type              = "aws",
