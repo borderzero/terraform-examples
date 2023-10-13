@@ -3,7 +3,7 @@ variable "border0_token" {
   default     = ""
 }
 
-variable "name_prefix" {
+variable "prefix" {
   description = "Name prefix"
   default     = ""
 }

@@ -23,8 +23,8 @@ resource "aws_iam_role_policy" "connector_SSHPushKey" {
   })
 }
 
-resource "aws_iam_role_policy" "connector_describeECS" {
-  name = "connector_describeECS"
+resource "aws_iam_role_policy" "connector_ECSDescribe" {
+  name = "connector_ECSDescribe"
   role = aws_iam_role.border0-connector-role.id
 
   policy = jsonencode({
@@ -33,12 +33,17 @@ resource "aws_iam_role_policy" "connector_describeECS" {
       {
         Effect = "Allow"
         Action = [
-          "ecs:ListTasks",
-          "ecs:DescribeTasks",
           "ecs:DescribeClusters",
+          "ecs:DescribeContainerInstances",
+          "ecs:DescribeServices",
+          "ecs:DescribeTaskDefinition",
+          "ecs:DescribeTasks",
           "ecs:ListClusters",
-          "ssm:StartSession",
-          "iam:SimulatePrincipalPolicy" # required for simulating principal policy operation
+          "ecs:ListContainerInstances",
+          "ecs:ListServices",
+          "ecs:ListTaskDefinitionFamilies",
+          "ecs:ListTaskDefinitions",
+          "ecs:ListTasks",
         ]
         Resource = "*"
       }
@@ -69,6 +74,42 @@ resource "aws_iam_role_policy" "connector_RDSConnect" {
 EOF
 }
 
+resource "aws_iam_role_policy" "connector_EC2Describe" {
+  name = "connector_EC2Describe"
+  role = aws_iam_role.border0-connector-role.id
+
+  policy = <<EOF
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Effect": "Allow",
+			"Action": "ec2:Describe*",
+			"Resource": "*"
+		}
+	]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "connector_RDSDescribe" {
+  name = "connector_RDSDescribe"
+  role = aws_iam_role.border0-connector-role.id
+
+  policy = <<EOF
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Effect": "Allow",
+			"Action": "rds:Describe*",
+			"Resource": "*"
+		}
+	]
+}
+EOF
+}
+
 resource "aws_iam_role_policy" "connector_SSMAccess" {
   name = "connector_SSMAccess"
   role = aws_iam_role.border0-connector-role.id
@@ -85,6 +126,7 @@ resource "aws_iam_role_policy" "connector_SSMAccess" {
         "ssm:GetParameters"
       ],
       "Resource": [
+        "arn:aws:ssm:*:*:parameter/aws/*",
         "arn:aws:ssm:*:*:parameter/border0/*"
       ]
     }
@@ -92,7 +134,6 @@ resource "aws_iam_role_policy" "connector_SSMAccess" {
 }
 EOF
 }
-
 
 
 resource "aws_iam_role_policy" "connector_SSMConsole" {

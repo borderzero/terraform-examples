@@ -10,16 +10,14 @@ output "private_subnet_ids" {
   value = {
     private_subnet_id_1 = aws_subnet.private_subnet_1.id
     private_subnet_id_2 = aws_subnet.private_subnet_2.id
-    private_subnet_id_3 = aws_subnet.private_subnet_3.id
-    connector_subnet_id = aws_subnet.connector_subnet.id
   }
 }
 
 output "ecs" {
   # map for cluster and service names
   value = {
-    cluster_name = aws_ecs_cluster.ecs-cluster.name
-    service_name = aws_ecs_service.ecs-service.name
+    cluster_name = aws_ecs_cluster.ecs-cluster1.name
+    service_name = aws_ecs_service.ecs-service1.name
   }
 }
   

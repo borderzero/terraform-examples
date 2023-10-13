@@ -17,7 +17,7 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "connector_instance" {
   instance_type          = "t3.micro"
   ami                    = data.aws_ami.ubuntu.id
-  subnet_id              = var.private_subnet_ids["connector_subnet_id"]
+  subnet_id              = var.private_subnet_ids["private_subnet_id_1"]
   iam_instance_profile   = aws_iam_instance_profile.border0-connector-profile.name
   vpc_security_group_ids = [var.allow_all_vpc_id]
   user_data_base64 = base64encode(templatefile("${path.module}/user-data.tpl",
@@ -34,7 +34,7 @@ resource "aws_instance" "connector_instance" {
   }
 
   tags = merge(
-    { Name = "border0-connector" },
+    { Name = "border0-example-connector" },
     var.default_tags,
   )
 }

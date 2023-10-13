@@ -1,16 +1,16 @@
 # ECS Cluster
-resource "aws_ecs_cluster" "ecs-cluster" {
-  name = "ecs-cluster"
+resource "aws_ecs_cluster" "ecs-cluster1" {
+  name = "ecs-cluster1"
 
   tags = merge(
-    { Name = "${var.name_prefix}-ecs-cluster" },
+    { Name = "${var.prefix}-ecs-cluster1" },
     var.default_tags,
   )
 }
 
 # ECS Task Definition
-resource "aws_ecs_task_definition" "ecs-buntu-container" {
-  family                   = "ecs-buntu-container"
+resource "aws_ecs_task_definition" "ecs-ubuntu-container" {
+  family                   = "ecs-ubuntu-container"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
@@ -27,26 +27,26 @@ resource "aws_ecs_task_definition" "ecs-buntu-container" {
   }])
 
   tags = merge(
-    { Name = "${var.name_prefix}-ecs-task" },
+    { Name = "${var.prefix}-ecs-task" },
     var.default_tags,
   )
 }
 
 # ECS Service
-resource "aws_ecs_service" "ecs-service" {
-  name                   = "ecs-service"
-  cluster                = aws_ecs_cluster.ecs-cluster.id
+resource "aws_ecs_service" "ecs-service1" {
+  name                   = "ecs-service1"
+  cluster                = aws_ecs_cluster.ecs-cluster1.id
   launch_type            = "FARGATE"
-  task_definition        = aws_ecs_task_definition.ecs-buntu-container.arn
-  desired_count          = 3
+  task_definition        = aws_ecs_task_definition.ecs-ubuntu-container.arn
+  desired_count          = 2
   enable_execute_command = true
   network_configuration {
     assign_public_ip = false
-    subnets          = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id, aws_subnet.private_subnet_3.id]
+    subnets          = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
   }
 
   tags = merge(
-    { Name = "${var.name_prefix}-ecs-service" },
+    { Name = "${var.prefix}-ecs-service1" },
     var.default_tags,
   )
 }
