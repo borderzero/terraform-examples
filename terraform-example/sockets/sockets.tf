@@ -63,7 +63,7 @@ resource "border0_policy_attachment" "rds_policy_attachment" {
 resource "border0_socket" "ec2-instance" {
   for_each = var.ec2_instances
 
-  name                             = "ec2-instance-${each.key}-${data.aws_region.current.name}"
+  name                             = "${each.key}-${data.aws_region.current.name}"
   description                      = "SSH Socket for ${each.key}-${data.aws_region.current.name}"
   recording_enabled                = true
   connector_authentication_enabled = true

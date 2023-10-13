@@ -37,9 +37,15 @@ git clone https://github.com/borderzero/terraform-examples.git
 cd terraform-examples
 ```
 #### 3. Border0 Credentials setup
+Once you create your Border0 account and API API [Member Token](https://portal.border0.com/organizations/current?tab=new_token) you can set it up in one of the following ways:
 
-Update the ``variables.tf`` file with your Border0 API Token
-<br>Set the ``MY_BORDER0_TOKEN`` variable to your Border0 API [Member Token](https://portal.border0.com/organizations/current?tab=new_token)
+Os Environment Variables
+```
+export TF_VAR_BORDER0_TOKEN="ey...9Iw"
+```
+or 
+
+Update the ``variables.tf`` file variable ``MY_BORDER0_TOKEN`` to your Border0 API [Member Token](https://portal.border0.com/organizations/current?tab=new_token)
 
 #### 4. AWS Credentials setup
 
@@ -54,24 +60,19 @@ export AWS_SECRET_ACCESS_KEY="asecretkey"
 export AWS_REGION="us-west-2"
 export AWS_DEFAULT_REGION="us-west-2"
 ```
-- SSO provider, and profiles (if you have those)
-```
-aws --profile=my-dev-account-profile sso login
-export AWS_PROFILE=my-dev-account-profile
-```
+
 more info on terraform aws provider [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
 
-#### 4b. Static variables
-
-Update the ``variables.tf`` file with your Border0 API Token and AWS Access Key and Secret
+#### 4b. Static Credentials
+You can run terraform with static credentials, if you don't want to supply them on each run, pdate the ``variables.tf`` file with your Border0 API Token, AWS Access Key and Secret
 <br>Set the following variables:
-- MY_AWS_ACCESS_KEY - AWS Access Key
-- MY_AWS_SECRET_KEY - AWS Secret Key
-- MY_AWS_REGION - AWS Region
+- AWS_ACCESS_KEY - AWS Access Key
+- AWS_SECRET_KEY - AWS Secret Key
+- AWS_REGION - AWS Region
 
 Once you have those variables defined uncomment aws profider ``region, access_key, secret_key`` settings in the ``main.tf`` file
 
-  
+
 #### 5. Initialise the Terraform:
 ```
 terraform init
