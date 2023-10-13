@@ -1,5 +1,5 @@
 resource "border0_socket" "connect_to_ecs_with_ssm" {
-  name                             = "connect-to-ecs-with-ssm"
+  name                             = var.ecs["cluster_name"]
   recording_enabled                = true
   socket_type                      = "ssh"
   connector_id                     = var.border0_connector_id
@@ -11,6 +11,14 @@ resource "border0_socket" "connect_to_ecs_with_ssm" {
     ecs_cluster_name   = var.ecs["cluster_name"]
     ecs_service_name   = var.ecs["service_name"]
   }
+
+  tags = merge({
+    border0_client_category    = var.prefix != "" ? var.prefix : "Border0-Example",
+    border0_client_subcategory = data.aws_region.current.name,
+    border0_client_icon        = "simple-icons:amazonecs",
+    provider_type              = "aws",
+    border0_client_icon_text   = var.ecs["service_name"],
+  }, var.default_tags)
 }
 
 
@@ -38,7 +46,12 @@ resource "border0_socket" "rds" {
     username            = var.rds_instance["username_path"]
     password            = var.rds_instance["password_path"]
   }
-
+  tags = merge({
+    border0_client_category    = var.prefix != "" ? var.prefix : "Border0-Example",
+    border0_client_subcategory = data.aws_region.current.name,
+    border0_client_icon        = "simple-icons:amazonrds",
+    provider_type              = "aws",
+  }, var.default_tags)
 }
 
 resource "border0_policy_attachment" "rds_policy_attachment" {
@@ -66,12 +79,18 @@ resource "border0_socket" "ec2-instance" {
     ec2_instance_id     = each.value["id"]
     ec2_instance_region = data.aws_region.current.name
   }
+  tags = merge({
+    border0_client_category    = var.prefix != "" ? var.prefix : "Border0-Example",
+    border0_client_subcategory = data.aws_region.current.name,
+    border0_client_icon        = "simple-icons:amazonec2",
+    provider_type              = "aws",
+  }, var.default_tags)
 }
 
 
 resource "border0_policy_attachment" "ec2_instances_policy_attachment" {
   for_each = border0_socket.ec2-instance
-  
+
   policy_id = var.border0_policy_id
   socket_id = each.value.id
 }

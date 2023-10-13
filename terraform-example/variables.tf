@@ -2,15 +2,14 @@ variable "border0_token" {
   description = "Border0 Token"
   default     = ""
 }
-variable "name_prefix" {
+variable "prefix" {
   description = "Name prefix"
   default     = ""
 }
 
-
 locals {
   default_tags = {
-    Origin = "Border0_on-ramp"
+    Origin = var.prefix != "" ? var.prefix : "Border0-example"
     Terraform = "true"
   }
 }

@@ -3,7 +3,7 @@ resource "aws_db_subnet_group" "rds_subnet_group" {
   subnet_ids = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
 
   tags = merge(
-    { Name = "${var.name_prefix}-rds-subnet-group" },
+    { Name = "${var.prefix}-rds-subnet-group" },
     var.default_tags,
   )
 }
@@ -29,7 +29,7 @@ locals {
 resource "aws_db_instance" "rds" {
   allocated_storage    = 20
   storage_type         = "gp3"
-  identifier           = "rds"
+  identifier           = var.prefix != "" ? "${var.prefix}-rds" : "Border0-Example-RDS"
   engine               = "mysql"
   engine_version       = "5.7"
   instance_class       = "db.t3.micro"
@@ -45,7 +45,7 @@ resource "aws_db_instance" "rds" {
   iam_database_authentication_enabled = true
 
   tags = merge(
-    { Name = "${var.name_prefix}-rds" },
+    { Name = "${var.prefix}-rds" },
     var.default_tags,
   )
 }
@@ -57,7 +57,13 @@ resource "aws_ssm_parameter" "border0-rds-username" {
   type        = "SecureString"
   depends_on  = [random_password.random-rds-username]
   value       = local.rds_username
-  overwrite = true
+  # in case of ParameterAlreadyExists error for aws_ssm_parameters
+  # https://github.com/hashicorp/terraform-provider-aws/issues/25636 and https://github.com/hashicorp/terraform-provider-aws/issues/32736
+  # overwrite = true
+  tags = merge(
+    { Name = "${var.prefix}-parameter" },
+    var.default_tags,
+  )
 }
 resource "aws_ssm_parameter" "border0-rds-password" {
   name        = var.smm-db-password-path
@@ -65,5 +71,11 @@ resource "aws_ssm_parameter" "border0-rds-password" {
   type        = "SecureString"
   depends_on  = [random_password.random-rds-password]
   value       = local.rds_password
-  overwrite = true
+  # in case of ParameterAlreadyExists error for aws_ssm_parameters
+  # https://github.com/hashicorp/terraform-provider-aws/issues/25636 and https://github.com/hashicorp/terraform-provider-aws/issues/32736
+  # overwrite = true
+  tags = merge(
+    { Name = "${var.prefix}-parameter" },
+    var.default_tags,
+  )
 }

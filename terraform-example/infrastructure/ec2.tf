@@ -24,7 +24,7 @@ resource "aws_instance" "ec2_instance" {
     volume_type = "gp3"
   }
   tags = merge(
-    { Name = "ec2_instance${format("%02d", count.index + 1)}" },
+    { Name = "${var.prefix}-ec2_instance${format("%02d", count.index + 1)}" },
     var.default_tags,
   )
 }
