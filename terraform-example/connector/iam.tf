@@ -185,6 +185,6 @@ resource "aws_iam_role" "border0-connector-role" {
 
 # IAM Instance Profile
 resource "aws_iam_instance_profile" "border0-connector-profile" {
-  name = "border0-connector-profile"
+  name = var.prefix != "" ? "${var.prefix}-Connector-profile" : "Border0-example-Connector-profile"
   role = aws_iam_role.border0-connector-role.name
 }

@@ -23,10 +23,8 @@ variable "allow_all_vpc_id" {
   type        = string
 }
 
-variable "smm-border0-token-path" {
-  type = string
-  description = "SSM parameter for the Border0 token"
-  default     = "/border0/connector-token"
+locals {
+  connector-token-param-path = var.prefix != "" ? "/border0/${var.prefix}-connector-token" : "/border0/border0-example-connector-token"
 }
 
 data "aws_region" "current" {}

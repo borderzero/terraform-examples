@@ -3,16 +3,10 @@ variable "prefix" {
   default     = ""
 }
 
-variable "smm-db-password-path" {
-  type = string
-  description = "SSM parameter for the RDS password"
-  default     = "/border0/demo-rds-password"
-}
 
-variable "smm-db-username-path" {
-  type = string
-  description = "SSM parameter for the RDS username"
-  default     = "/border0/demo-rds-username"
+locals {
+  rds-password-param-path = var.prefix != "" ? "/border0/${var.prefix}-rdsPass" : "/border0/border0-example-RDS-Pass"
+  rds-username-param-path = var.prefix != "" ? "/border0/${var.prefix}-rdsUser" : "/border0/border0-example-RDS-User"
 }
 
 data "aws_region" "current" {}

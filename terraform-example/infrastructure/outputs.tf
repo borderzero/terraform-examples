@@ -25,8 +25,8 @@ output "rds_instance" {
   value = {
     address = aws_db_instance.rds.address
     port    = aws_db_instance.rds.port
-    username_path = "from:aws:ssm:${var.smm-db-username-path}"
-    password_path = "from:aws:ssm:${var.smm-db-password-path}"
+    username_path = "from:aws:ssm:${local.rds-username-param-path}"
+    password_path = "from:aws:ssm:${local.rds-password-param-path}"
   }
 }
 
