@@ -23,6 +23,7 @@ We will be creating a Border0 enabled infrastructure in AWS with the following r
     - Security Groups
 - RDS Instance
 - ECS Cluster, Task and Service Definition
+- ALB and Target Group for the ECS Service HTTP Endpoint
 - Client/Origin EC2 Instances
 - Border0 Connector EC2 Instance
 

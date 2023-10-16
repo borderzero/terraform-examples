@@ -1,5 +1,26 @@
-resource "border0_socket" "connect_to_ecs_with_ssm" {
-  name                             = var.ecs["cluster_name"]
+resource "border0_socket" "alb_http_socket1" {
+  name                             = "nginx-webserver1"
+  recording_enabled                = true
+  socket_type                      = "http"
+  connector_id                     = var.border0_connector_id
+  connector_authentication_enabled = false
+  
+  http_configuration {
+    upstream_url = "http://${var.alb["alb_dns_name"]}"
+  }
+
+  tags = merge({
+    border0_client_category    = "Terraform Example",
+    border0_client_subcategory = data.aws_region.current.name,
+    border0_client_icon        = "nonicons:nginx-16",
+    provider_type              = "aws",
+    border0_client_icon_text   = "${var.alb["alb_dns_name"]}",
+  }, var.default_tags)
+}
+
+
+resource "border0_socket" "connect_to_ecs1_with_ssm" {
+  name                             = var.ecs["cluster1"]["cluster_name"]
   recording_enabled                = true
   socket_type                      = "ssh"
   connector_id                     = var.border0_connector_id
@@ -8,8 +29,8 @@ resource "border0_socket" "connect_to_ecs_with_ssm" {
     service_type       = "aws_ssm"
     ssm_target_type    = "ecs"
     ecs_cluster_region = data.aws_region.current.name
-    ecs_cluster_name   = var.ecs["cluster_name"]
-    ecs_service_name   = var.ecs["service_name"]
+    ecs_cluster_name   = var.ecs["cluster1"]["cluster_name"]
+    ecs_service_name   = var.ecs["cluster1"]["service_name"]
   }
 
   tags = merge({
@@ -17,15 +38,16 @@ resource "border0_socket" "connect_to_ecs_with_ssm" {
     border0_client_subcategory = data.aws_region.current.name,
     border0_client_icon        = "simple-icons:amazonecs",
     provider_type              = "aws",
-    border0_client_icon_text   = var.ecs["service_name"],
+    border0_client_icon_text   = var.ecs["cluster1"]["service_name"],
   }, var.default_tags)
 }
 
 
-resource "border0_policy_attachment" "ecs_socket_policy_attachment" {
+resource "border0_policy_attachment" "ecs_socket_policy_attachment1" {
   policy_id = var.border0_policy_id
-  socket_id = border0_socket.connect_to_ecs_with_ssm.id
+  socket_id = border0_socket.connect_to_ecs1_with_ssm.id
 }
+
 
 
 resource "border0_socket" "rds" {
