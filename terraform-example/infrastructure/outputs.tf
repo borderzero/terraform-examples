@@ -16,11 +16,21 @@ output "private_subnet_ids" {
 output "ecs" {
   # map for cluster and service names
   value = {
+    cluster1 = {
     cluster_name = aws_ecs_cluster.ecs-cluster1.name
     service_name = aws_ecs_service.ecs-service1.name
+    }
   }
 }
-  
+
+output "alb" {
+  value = {
+    alb_name = aws_lb.nginx_alb.name
+    alb_arn  = aws_lb.nginx_alb.arn
+    alb_dns_name = aws_lb.nginx_alb.dns_name
+  }
+}
+
 output "rds_instance" {
   value = {
     address = aws_db_instance.rds.address

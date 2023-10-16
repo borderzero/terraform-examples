@@ -22,6 +22,7 @@ module "sockets" {
 
   # ECS, RDS, and EC2 instances from infrastructure
   ecs           = module.infrastructure.ecs
+  alb           = module.infrastructure.alb
   rds_instance  = module.infrastructure.rds_instance
   ec2_instances = module.infrastructure.ec2_instances
 

@@ -9,25 +9,26 @@ resource "aws_ecs_cluster" "ecs-cluster1" {
 }
 
 # ECS Task Definition
-resource "aws_ecs_task_definition" "ecs-ubuntu-container" {
-  family                   = "ecs-ubuntu-container"
+resource "aws_ecs_task_definition" "ecs-nginx-container" {
+  family                   = "ecs-nginx-container"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
   memory                   = "512"
-  execution_role_arn = aws_iam_role.ecs_execution_role.arn
-  task_role_arn      = aws_iam_role.ecs_task_role.arn
+  execution_role_arn = aws_iam_role.ecs_ngx_execution_role.arn
+  task_role_arn      = aws_iam_role.ecs_ngx_task_role.arn
   container_definitions = jsonencode([{
-    name = var.prefix != "" ? "${var.prefix}-container" : "Border0-example-container"
-    image   = "ubuntu:latest"
-    command = ["tail", "-f", "/dev/null"]
-    linuxParameters = {
-      initProcessEnabled = true
-    }
+    name = var.prefix != "" ? "${var.prefix}-ngx-container" : "Border0-example-ngx-container"
+    image = "nginxdemos/hello",
+    portMappings = [{
+      containerPort = 80,
+      hostPort      = 80,
+      protocol      = "tcp"
+    }]
   }])
 
   tags = merge(
-    { Name = "${var.prefix}-ecs-task" },
+    { Name = "${var.prefix}-ngx-ecs-task" },
     var.default_tags,
   )
 }
@@ -37,13 +38,20 @@ resource "aws_ecs_service" "ecs-service1" {
   name                   = "ecs-service1"
   cluster                = aws_ecs_cluster.ecs-cluster1.id
   launch_type            = "FARGATE"
-  task_definition        = aws_ecs_task_definition.ecs-ubuntu-container.arn
+  task_definition        = aws_ecs_task_definition.ecs-nginx-container.arn
   desired_count          = 2
   enable_execute_command = true
   network_configuration {
     assign_public_ip = false
-    subnets          = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
+    subnets          = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_1.id]
+    security_groups = [aws_security_group.allow_all_vpc.id]
   }
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.nginx_alb_target_group.arn
+    container_name   = var.prefix != "" ? "${var.prefix}-ngx-container" : "Border0-example-ngx-container"  # Updated to match container name in task definition
+    container_port   = 80
+  }  
 
   tags = merge(
     { Name = "${var.prefix}-ecs-service1" },
@@ -53,8 +61,8 @@ resource "aws_ecs_service" "ecs-service1" {
 
 
 # IAM Role for ECS Task Execution
-resource "aws_iam_role" "ecs_execution_role" {
-  name = var.prefix != "" ? "${var.prefix}-ecs-exec-role" : "Border0-example-ecs-exec-role"
+resource "aws_iam_role" "ecs_ngx_execution_role" {
+  name = var.prefix != "" ? "${var.prefix}-ecs-ngx-exec-role" : "Border0-example-ecs-ngx-exec-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -71,8 +79,8 @@ resource "aws_iam_role" "ecs_execution_role" {
 }
 
 # IAM Role for ECS Task
-resource "aws_iam_role" "ecs_task_role" {
-  name = var.prefix != "" ? "${var.prefix}-ecs-task-role" : "Border0-example-ecs-task-role"
+resource "aws_iam_role" "ecs_ngx_task_role" {
+  name = var.prefix != "" ? "${var.prefix}-ecs-ngx-task-role" : "Border0-example-ecs-ngx-task-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -89,10 +97,10 @@ resource "aws_iam_role" "ecs_task_role" {
 }
 
 
-resource "aws_iam_role_policy" "ecs_task_role_SSMConsole" {
-  name = "ecs_task_role_SSMConsole"
+resource "aws_iam_role_policy" "ecs_ngx_task_role_SSMConsole" {
+  name = "ecs_ngx_task_role_SSMConsole"
   # description = "Grants all access to RDS DB based on AIM auth"
-  role = aws_iam_role.ecs_task_role.name
+  role = aws_iam_role.ecs_ngx_task_role.name
 
   policy = <<EOF
 {

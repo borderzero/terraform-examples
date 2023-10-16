@@ -15,7 +15,15 @@ variable "border0_policy_id" {
 
 variable "ecs" {
   description = "ECS Cluster and Service names"
-  type        = map(string)
+  type = map(object({
+    cluster_name = string
+    service_name = string
+  }))
+}
+
+variable "alb" {
+  description = "ALB"
+  type = map(string)
 }
 
 variable "rds_instance" {
