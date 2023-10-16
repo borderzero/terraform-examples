@@ -80,8 +80,11 @@ terraform init
 ```
 terraform plan && terraform apply
 ```
-Once the Terraform module is done you can navigate to the Border0 Portal and see the newly created infrastructure 
-[Admin Portal](https://portal.border0.com/mysockets) and [Client Portal](https://client.border0.com/#/login)
+Once the Terraform module is done you can navigate to the Border0 Portal and see the newly created infrastructure:
+- [Client Portal](https://client.border0.com/#/login)
+[![Client Portal](client-portal.png)](https://client.border0.com)
+- [Admin Portal](https://portal.border0.com/mysockets)
+[![Admin Portal](admin-portal.png)](https://portal.border0.com)
 
 #### 7. Optionally, run cleanup for Terraform module:
 ```
