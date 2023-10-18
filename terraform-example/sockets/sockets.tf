@@ -4,7 +4,7 @@ resource "border0_socket" "alb_http_socket1" {
   socket_type                      = "http"
   connector_id                     = var.border0_connector_id
   connector_authentication_enabled = false
-  
+
   http_configuration {
     upstream_url = "http://${var.alb["alb_dns_name"]}"
   }
@@ -62,7 +62,6 @@ resource "border0_socket" "rds" {
     protocol            = "mysql"
     service_type        = "aws_rds"
     authentication_type = "username_and_password"
-    rds_instance_region = data.aws_region.current.name
     hostname            = var.rds_instance["address"]
     port                = var.rds_instance["port"]
     username            = var.rds_instance["username_path"]
