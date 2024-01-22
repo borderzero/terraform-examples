@@ -23,6 +23,25 @@ resource "aws_iam_role_policy" "connector_SSHPushKey" {
   })
 }
 
+resource "aws_iam_role_policy" "connector_EKSDescribe" {
+  name = "connector_EKSDescribe"
+  role = aws_iam_role.connector_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "eks:DescribeCluster",
+          "eks:ListClusters",
+        ],
+        Resource = "*"
+      }
+    ]
+  })
+}
+
 resource "aws_iam_role_policy" "connector_ECSDescribe" {
   name = "connector_ECSDescribe"
   role = aws_iam_role.border0-connector-role.id
@@ -135,6 +154,30 @@ resource "aws_iam_role_policy" "connector_SSMAccess" {
 EOF
 }
 
+resource "aws_iam_role_policy" "connector_SSMDescribePlus" {
+  name = "connector_SSMDescribePlus"
+  #   description = "Grants all access to SSM"
+  role = aws_iam_role.connector_role.id
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ssm:DescribeParameters",
+        "ssm:DescribeInstanceInformation",
+        "ssm:TerminateSession"
+      ],
+      "Resource": [
+        "arn:aws:ssm:*"
+      ]
+    }
+  ]
+}
+EOF
+}
 
 resource "aws_iam_role_policy" "connector_SSMConsole" {
   name = "connector_SSMConsole"
