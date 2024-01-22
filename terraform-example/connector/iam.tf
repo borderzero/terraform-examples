@@ -25,7 +25,7 @@ resource "aws_iam_role_policy" "connector_SSHPushKey" {
 
 resource "aws_iam_role_policy" "connector_EKSDescribe" {
   name = "connector_EKSDescribe"
-  role = aws_iam_role.connector_role.id
+  role = aws_iam_role.border0-connector-role.id
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -157,7 +157,7 @@ EOF
 resource "aws_iam_role_policy" "connector_SSMDescribePlus" {
   name = "connector_SSMDescribePlus"
   #   description = "Grants all access to SSM"
-  role = aws_iam_role.connector_role.id
+  role = aws_iam_role.border0-connector-role.id
 
   policy = <<EOF
 {
