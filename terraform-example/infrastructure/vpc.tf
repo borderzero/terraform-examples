@@ -1,5 +1,5 @@
 resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
 
   tags = merge(
@@ -23,8 +23,8 @@ resource "aws_subnet" "public_subnet" {
 }
 
 resource "aws_subnet" "private_subnet_1" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.1.0/24"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.1.0/24"
   availability_zone = element(data.aws_availability_zones.available.names, 0) # First AZ
   tags = merge(
     { Name = "${var.prefix}-private-subnet-1" },
@@ -33,8 +33,8 @@ resource "aws_subnet" "private_subnet_1" {
 }
 # Create additional private subnet in another AZ
 resource "aws_subnet" "private_subnet_2" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.2.0/24"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.2.0/24"
   availability_zone = element(data.aws_availability_zones.available.names, 1) # Second AZ
   tags = merge(
     { Name = "${var.prefix}-private-subnet-2" },

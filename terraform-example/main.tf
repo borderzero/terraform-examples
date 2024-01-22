@@ -5,10 +5,10 @@ module "infrastructure" {
 }
 
 module "connector" {
-  source        = "./connector"
-  default_tags  = local.default_tags
-  prefix        = var.prefix
-  access-email  = var.access-email
+  source       = "./connector"
+  default_tags = local.default_tags
+  prefix       = var.prefix
+  access-email = var.access-email
 
   # VPC, subnets, and security groups from infrastructure
   private_subnet_ids = module.infrastructure.private_subnet_ids
@@ -16,9 +16,9 @@ module "connector" {
 }
 
 module "sockets" {
-  source        = "./sockets"
-  default_tags  = local.default_tags
-  prefix        = var.prefix
+  source       = "./sockets"
+  default_tags = local.default_tags
+  prefix       = var.prefix
 
   # ECS, RDS, and EC2 instances from infrastructure
   ecs           = module.infrastructure.ecs
