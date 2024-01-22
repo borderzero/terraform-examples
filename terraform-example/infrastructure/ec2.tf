@@ -18,7 +18,7 @@ resource "aws_instance" "ec2_instance" {
   subnet_id              = element([aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id], count.index % 2)
   vpc_security_group_ids = [aws_security_group.allow_all_vpc.id]
 
-  count = 2
+  count                = 2
   iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
   root_block_device {
     volume_type = "gp3"

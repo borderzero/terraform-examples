@@ -13,7 +13,7 @@ variable "prefix" {
 
 locals {
   default_tags = {
-    Origin = var.prefix != "" ? var.prefix : "Border0-example"
+    Origin    = var.prefix != "" ? var.prefix : "Border0-example"
     Terraform = "true"
   }
 }

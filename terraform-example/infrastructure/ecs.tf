@@ -15,10 +15,10 @@ resource "aws_ecs_task_definition" "ecs-nginx-container" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
   memory                   = "512"
-  execution_role_arn = aws_iam_role.ecs_ngx_execution_role.arn
-  task_role_arn      = aws_iam_role.ecs_ngx_task_role.arn
+  execution_role_arn       = aws_iam_role.ecs_ngx_execution_role.arn
+  task_role_arn            = aws_iam_role.ecs_ngx_task_role.arn
   container_definitions = jsonencode([{
-    name = var.prefix != "" ? "${var.prefix}-ngx-container" : "Border0-example-ngx-container"
+    name  = var.prefix != "" ? "${var.prefix}-ngx-container" : "Border0-example-ngx-container"
     image = "nginxdemos/hello",
     portMappings = [{
       containerPort = 80,
@@ -44,14 +44,14 @@ resource "aws_ecs_service" "ecs-service1" {
   network_configuration {
     assign_public_ip = false
     subnets          = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_1.id]
-    security_groups = [aws_security_group.allow_all_vpc.id]
+    security_groups  = [aws_security_group.allow_all_vpc.id]
   }
 
   load_balancer {
     target_group_arn = aws_lb_target_group.nginx_alb_target_group.arn
-    container_name   = var.prefix != "" ? "${var.prefix}-ngx-container" : "Border0-example-ngx-container"  # Updated to match container name in task definition
+    container_name   = var.prefix != "" ? "${var.prefix}-ngx-container" : "Border0-example-ngx-container" # Updated to match container name in task definition
     container_port   = 80
-  }  
+  }
 
   tags = merge(
     { Name = "${var.prefix}-ecs-service1" },

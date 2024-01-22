@@ -1,6 +1,6 @@
 # IAM Policy
 resource "aws_iam_policy" "ssm_policy" {
-  name = var.prefix != "" ? "${var.prefix}-PartielSMMAllowPolicy" : "Border0-example-PartielSMMAllowPolicy"
+  name        = var.prefix != "" ? "${var.prefix}-PartielSMMAllowPolicy" : "Border0-example-PartielSMMAllowPolicy"
   description = "Policy for allowing SSM operations"
 
   policy = jsonencode({

@@ -10,7 +10,7 @@ variable "prefix" {
 
 variable "private_subnet_ids" {
   description = "The ID of the private subnets"
-  type = map(string)
+  type        = map(string)
 }
 
 variable "allow_all_vpc_id" {

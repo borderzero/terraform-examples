@@ -10,7 +10,7 @@ terraform {
 }
 
 provider "aws" {
-  region = var.AWS_REGION != null ? var.AWS_REGION : null
+  region     = var.AWS_REGION != null ? var.AWS_REGION : null
   access_key = var.AWS_ACCESS_KEY_ID != null ? var.AWS_ACCESS_KEY_ID : null
   secret_key = var.AWS_SECRET_ACCESS_KEY != null ? var.AWS_SECRET_ACCESS_KEY : null
 }
@@ -25,7 +25,7 @@ module "border0_terraform-example" {
 
   # Set this to your email address to allow access to the Border0 policy
   # If not set, the default org wide policy will be the main access controlling policy
-  access-email  = "example-username@terraform-example-domain.com"
+  access-email = "example-username@terraform-example-domain.com"
 
   # Resource name prefix to be added
   prefix = "border0-terraform-example"

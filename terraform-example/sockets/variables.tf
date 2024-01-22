@@ -23,7 +23,7 @@ variable "ecs" {
 
 variable "alb" {
   description = "ALB"
-  type = map(string)
+  type        = map(string)
 }
 
 variable "rds_instance" {
