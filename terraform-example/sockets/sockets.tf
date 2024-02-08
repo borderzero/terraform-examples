@@ -1,9 +1,8 @@
 resource "border0_socket" "alb_http_socket1" {
-  name                             = "nginx-webserver1"
-  recording_enabled                = true
-  socket_type                      = "http"
-  connector_id                     = var.border0_connector_id
-  connector_authentication_enabled = false
+  name              = "nginx-webserver1"
+  recording_enabled = true
+  socket_type       = "http"
+  connector_id      = var.border0_connector_id
 
   http_configuration {
     upstream_url = "http://${var.alb["alb_dns_name"]}"
@@ -20,11 +19,11 @@ resource "border0_socket" "alb_http_socket1" {
 
 
 resource "border0_socket" "connect_to_ecs1_with_ssm" {
-  name                             = var.ecs["cluster1"]["cluster_name"]
-  recording_enabled                = true
-  socket_type                      = "ssh"
-  connector_id                     = var.border0_connector_id
-  connector_authentication_enabled = true
+  name              = var.ecs["cluster1"]["cluster_name"]
+  recording_enabled = true
+  socket_type       = "ssh"
+  connector_id      = var.border0_connector_id
+
   ssh_configuration {
     service_type       = "aws_ssm"
     ssm_target_type    = "ecs"
@@ -51,12 +50,11 @@ resource "border0_policy_attachment" "ecs_socket_policy_attachment1" {
 
 
 resource "border0_socket" "rds" {
-  name                             = "rds-${data.aws_region.current.name}"
-  description                      = "DB Socket for RDS in ${data.aws_region.current.name}"
-  recording_enabled                = true
-  socket_type                      = "database"
-  connector_id                     = var.border0_connector_id
-  connector_authentication_enabled = true
+  name              = "rds-${data.aws_region.current.name}"
+  description       = "DB Socket for RDS in ${data.aws_region.current.name}"
+  recording_enabled = true
+  socket_type       = "database"
+  connector_id      = var.border0_connector_id
 
   database_configuration {
     protocol            = "mysql"
@@ -84,12 +82,11 @@ resource "border0_policy_attachment" "rds_policy_attachment" {
 resource "border0_socket" "ec2-instance" {
   for_each = var.ec2_instances
 
-  name                             = "${each.key}-${data.aws_region.current.name}"
-  description                      = "SSH Socket for ${each.key}-${data.aws_region.current.name}"
-  recording_enabled                = true
-  connector_authentication_enabled = true
-  socket_type                      = "ssh"
-  connector_id                     = var.border0_connector_id
+  name              = "${each.key}-${data.aws_region.current.name}"
+  description       = "SSH Socket for ${each.key}-${data.aws_region.current.name}"
+  recording_enabled = true
+  socket_type       = "ssh"
+  connector_id      = var.border0_connector_id
 
   ssh_configuration {
     service_type        = "aws_ec2_instance_connect"

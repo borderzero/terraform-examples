@@ -4,11 +4,13 @@ variable "BORDER0_TOKEN" {
   # Override this with the token you want to use instead of the default
   default = null
 }
+
 variable "AWS_REGION" {
   description = "AWS Region"
   # Override this with the region you want to use instead of the default
   default = null
 }
+
 variable "AWS_ACCESS_KEY_ID" {
   description = "AWS Access Key"
   sensitive   = true

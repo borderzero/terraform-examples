@@ -4,7 +4,7 @@ terraform {
     aws = ">= 3.0.0"
     border0 = {
       source  = "borderzero/border0"
-      version = ">= 1.0.1"
+      version = ">= 2.0.0"
     }
   }
 }
@@ -18,7 +18,6 @@ provider "aws" {
 provider "border0" {
   token = var.BORDER0_TOKEN != null ? var.BORDER0_TOKEN : null
 }
-
 
 module "border0_terraform-example" {
   source = "./terraform-example"

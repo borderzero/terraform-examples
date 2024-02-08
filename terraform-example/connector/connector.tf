@@ -16,7 +16,6 @@ resource "border0_connector_token" "border0_connector-token" {
   expires_at = ""
 }
 
-
 resource "aws_ssm_parameter" "border0-token-parameter" {
   name        = local.connector-token-param-path
   description = "${var.prefix} - Border0 runtime connector token"
