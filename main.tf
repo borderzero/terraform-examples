@@ -4,7 +4,7 @@ terraform {
     aws = ">= 3.0.0"
     border0 = {
       source  = "borderzero/border0"
-      version = ">= 2.0.0"
+      version = ">= 2.0.6"
     }
   }
 }
@@ -22,9 +22,9 @@ provider "border0" {
 module "border0_terraform-example" {
   source = "./terraform-example"
 
-  # Set this to your email address to allow access to the Border0 policy
-  # If not set, the default org wide policy will be the main access controlling policy
-  access-email = "example-username@terraform-example-domain.com"
+  # Set this to your email address to allow access to resources via a Border0 policy.
+  # Note that users *MUST* be added to the Border0 organization prior to use here.
+  access-email = ""
 
   # Resource name prefix to be added
   prefix = "border0-terraform-example"
