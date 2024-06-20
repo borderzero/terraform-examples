@@ -1,97 +1,12 @@
-# Getting started with Border0 and Terraform for AWS
-This Terraform code will let you start with Border0 in AWS in just a few minutes using the Border0 terraform provider. 
-We have automated creating a Border0-enabled infrastructure as a great way to get started with Border0 and see how it works.
+# Border0 Terraform Provider Examples
 
-## prerequisites prep and assumptions
-Before we get started, make sure you have the following:
+Welcome to the Border0 Terraform Provider examples repository. This repository contains examples of how to use the Border0 Terraform Provider to automate your Border0 infrastructure and beyond.
 
-1. [Border0 Account](https://docs.border0.com/docs/signup) and a Border0 [API Token](https://docs.border0.com/docs/creating-access-token). We recommend you create a token of type [Member](https://portal.border0.com/organizations/current?tab=new_token)
+We have prepared a series of examples to help you get started with the Border0 Terraform Provider. Each example is a self-contained Terraform module that demonstrates how to use the Border0 Terraform Provider to automate Border0 infrastructure.
+Each example includes a README file that explains the purpose of the example, the prerequisites, and how to run the example.
+The subdirectories are numbered in the order you should follow to get started with the Border0 Terraform Provider, and they increase in complexity as you progress through the examples.
 
-2. AWS Account, Access Key and Secret, you can create them here: [AWS Access Keys](https://console.aws.amazon.com/iam/home?#/security_credentials)
+If you have any questions or [need help](https://docs.border0.com/docs/getting-help), please reach out to us. We are here to help you automate your Border0 infrastructure.
+- [support@border0.com](mailto:support@border0.com)
+- [Border0 Community Slack](https://join.slack.com/t/border0community/shared_invite/zt-zbx586ls-x44z7I3POLPQfesRWnig7Q)
 
-3. Terraform, if you don't already have it, here is [Hashicorp Installation Guide](https://learn.hashicorp.com/tutorials/terraform/install-cli)
-
-> **Caution:** This code creates resources in your AWS account! Once you are finished testing, remove these resources to prevent unnecessary AWS costs. You can delete resources manually or with `terraform destroy`.
-
-## Terraform Module Diagram
-![Terraform Module Diagram](diagram.png)
-## Running the Border0 Terraform example
-We will be creating a Border0 enabled infrastructure in AWS with the following resources:
-- VPC
-    - Two private and one public subnet
-    - Internet and NAT Gateways
-    - Security Groups
-- RDS Instance
-- ECS Cluster, Task and Service Definition
-- ALB and Target Group for the ECS Service HTTP Endpoint
-- Client/Origin EC2 Instances
-- Border0 Connector EC2 Instance
-
-
-#### 1. Clone this repo:
-```
-git clone https://github.com/borderzero/terraform-examples.git
-```
-
-#### 2. Switch to the terraform-examples directory:
-```
-cd terraform-examples
-```
-#### 3. Border0 Credentials Setup
-
-Once you create your Border0 account and API [Member Token](https://portal.border0.com/organizations/current?tab=new_token) you can set it up in one of the following ways:
-
-Os Environment Variables
-```
-export BORDER0_TOKEN="ey...9Iw"
-```
-or 
-
-Update the ``variables.tf`` file variable ``BORDER0_TOKEN`` to your Border0 API [Member Token](https://portal.border0.com/organizations/current?tab=new_token)
-
-#### 4. Border0 Policy Setup
-
-Add your Border0 account's email address as the `access-email` input to the `border0_terraform-example` terraform module in `main.tf`.
-
-#### 5. AWS Credentials Setup
-
-If you have your AWS default credentials set up in your environment and want to use them, you are good to go! 
-
-Otherwise, you can set up your AWS credentials in one of the following ways:
-
-#### 5a. Environment Variables.
-```
-export AWS_ACCESS_KEY_ID="anaccesskey"
-export AWS_SECRET_ACCESS_KEY="asecretkey"
-export AWS_REGION="us-west-2"
-export AWS_DEFAULT_REGION="us-west-2"
-```
-
-more info on terraform aws provider [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
-
-#### 5b. Static Credentials
-You can run terraform with static credentials, simply update the ``variables.tf`` file with your Border0 API Token, AWS Access Key and Secret
-<br>Set the following variables:
-- AWS_ACCESS_KEY - AWS Access Key
-- AWS_SECRET_KEY - AWS Secret Key
-- AWS_REGION - AWS Region
-
-
-#### 6. Initialize Terraform:
-```
-terraform init
-```
-#### 7. Apply the Terraform:
-```
-terraform plan && terraform apply
-```
-Once the Terraform module is done you can navigate to the Border0 Portal and see the newly created infrastructure:
-- [Client Portal](https://client.border0.com/#/login)
-[![Client Portal](client-portal.png)](https://client.border0.com)
-- [Admin Portal](https://portal.border0.com/mysockets)
-[![Admin Portal](admin-portal.png)](https://portal.border0.com)
-
-#### 8. Optionally, run cleanup for Terraform module:
-```
-terraform destroy
-```

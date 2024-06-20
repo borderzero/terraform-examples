@@ -2,7 +2,18 @@
 **.tfstate
 **.tfstate.*
 **/.terraform/
+**/.terraform/*
 **.terraform.lock.hcl
 
 # We ignore Terraform plan files as well
 *.tfplan
+
+# Ignore dynamic files
+**.tfvars
+**.tfvars.json
+**.auto.tfvars
+**.auto.tfvars.json
+
+# ignore generated files
+**border0.yaml
+**runme.sh
