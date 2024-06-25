@@ -1,9 +1,8 @@
-# variables.tf
-
-variable "BORDER0_TOKEN" {
-  description = "Border0 Token"
+variable "BORDER0_TF_TOKEN" {
+  description = "Border0 Service Account Token"
   sensitive   = true
-  # Override this with the token you want to use instead of the default or set it in the environment
+  # Override this with the token you want to use instead of the default
+  # alternatively export TF_VAR_BORDER0_TF_TOKEN="ey...9Iw" environment variable
   default = null
 }
 
