@@ -21,9 +21,6 @@ resource "border0_policy" "my-access-policy" {
   policy_data = jsonencode({
     "permissions" : {
       "ssh" : {
-        # "allowed_usernames" : [
-        #   "ubuntu"
-        # ],
         "shell" : {},
         "exec" : {},
         "sftp" : {},
@@ -31,17 +28,16 @@ resource "border0_policy" "my-access-policy" {
         "kubectl_exec" : {},
         "docker_exec" : {}
       },
-      "database" : {},
-      #   "database" : {
-      #     "allowed_databases" : [
-      #       {
-      #         "database" : "*",
-      #         "allowed_query_types" : [
-      #           "ReadOnly"
-      #         ]
-      #       }
-      #     ]
-      #   },
+      "database" : {
+        "allowed_databases" : [
+          {
+            "database" : "books",
+            "allowed_query_types" : [
+              "ReadOnly"
+            ]
+          }
+        ]
+      },
       "http" : {},
       "tls" : {},
       "vnc" : {},
@@ -51,7 +47,9 @@ resource "border0_policy" "my-access-policy" {
     },
     "condition" : {
       "who" : {
-        "email" : ["greg@border0.com"],
+        "email" : [
+          "greg@border0.com",
+        ],
         "group" : [],
         "service_account" : []
       },
@@ -72,3 +70,4 @@ resource "border0_policy" "my-access-policy" {
     }
   })
 }
+

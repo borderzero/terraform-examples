@@ -19,7 +19,8 @@ provider "border0" {
 
 output "everything" {
   value = {
-    "Please run this CLI script"                           = "./runme.sh"
-    "You can view your infrastructure in the Admin Portal" = "https://portal.border0.com/"
+    "To start the connector"            = "./runme.sh start"
+    "You can see your sockets here:"    = "https://portal.border0.com/sockets"
+    "You can view your Connector here:" = "https://portal.border0.com/connector/${border0_connector.first-connector.id}"
   }
 }
