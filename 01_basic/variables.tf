@@ -5,4 +5,3 @@ variable "BORDER0_TF_TOKEN" {
   # alternatively export TF_VAR_BORDER0_TOKEN="ey...9Iw" environment variable
   default = null
 }
-

@@ -1,13 +1,8 @@
 terraform {
-  required_version = ">= 0.14.0"
   required_providers {
     border0 = {
       source  = "borderzero/border0"
-      version = ">= 2.0.7"
-    }
-    local = {
-      source  = "hashicorp/local"
-      version = ">= 2.1"
+      version = ">= 2.0.8"
     }
   }
 }
@@ -19,8 +14,7 @@ provider "border0" {
 
 output "everything" {
   value = {
-    "To start the connector"            = "./runme.sh start"
-    "You can see your sockets here:"    = "https://portal.border0.com/sockets"
-    "You can view your Connector here:" = "https://portal.border0.com/connector/${border0_connector.first-connector.id}"
+    "To start the connector using cli"  = "border0 connector start --config ${path.module}/border0.yaml"
+    "You can view your connector here:" = "https://portal.border0.com/connector/${border0_connector.first-connector.id}"
   }
 }

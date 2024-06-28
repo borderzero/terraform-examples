@@ -1,22 +1,39 @@
+# variable for the user account email
+variable "user_account_email" {
+  description = "The email of the account owner"
+  type        = string
+  default     = "greg@border0.com"
+}
+
+variable "create_custom_policy" {
+  description = "This variable controlls the creation of a custom policy"
+  type        = bool
+  default     = false # set this to true to create a custom policy
+}
+
 resource "border0_policy_attachment" "playground_http_to_client-policy" {
-  policy_id = border0_policy.my-access-policy.id
+  count = var.create_custom_policy ? 1 : 0
+  policy_id = border0_policy.my-tf-access-policy[0].id
   socket_id = border0_socket.playground_http.id
 }
 
 resource "border0_policy_attachment" "playground_ssh_to_client-policy" {
-  policy_id = border0_policy.my-access-policy.id
+  count = var.create_custom_policy ? 1 : 0
+  policy_id = border0_policy.my-tf-access-policy[0].id
   socket_id = border0_socket.playground_ssh.id
 }
 
 resource "border0_policy_attachment" "playground_mysql_to_client-policy" {
-  policy_id = border0_policy.my-access-policy.id
+  count = var.create_custom_policy ? 1 : 0
+  policy_id = border0_policy.my-tf-access-policy[0].id
   socket_id = border0_socket.playground_mysql.id
 }
 
 # create policy
-resource "border0_policy" "my-access-policy" {
-  name        = "my-access-tf-policy"
-  description = "My access terraform policy"
+resource "border0_policy" "my-tf-access-policy" {
+  count = var.create_custom_policy ? 1 : 0
+  name        = "my-tf-access-policy"
+  description = "My terraform managed access policy"
   version     = "v2"
   policy_data = jsonencode({
     "permissions" : {
@@ -47,9 +64,7 @@ resource "border0_policy" "my-access-policy" {
     },
     "condition" : {
       "who" : {
-        "email" : [
-          "greg@border0.com",
-        ],
+        "email" : [var.user_account_email],
         "group" : [],
         "service_account" : []
       },

@@ -2,7 +2,6 @@
 resource "border0_connector" "first-connector" {
   name                         = "first-connector"
   description                  = "My first connector created from terraform"
-  built_in_ssh_service_enabled = true
 }
 
 # create connector token
