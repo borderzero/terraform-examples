@@ -7,6 +7,8 @@ We have automated basic Border0 infrastructure you can quickly run on your local
 
 2. Terraform tooling (if you don't already have it) here is [Hashicorp Installation Guide](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 
+3. Border0 cli tool (if you don't already have it) here is [Border0 Quick-Start Guide](https://docs.border0.com/docs/quick-start)
+
 #### 1. Clone this repo:
 ```
 git clone https://github.com/borderzero/terraform-examples.git
@@ -30,7 +32,7 @@ Once you create your token you can set it up in one of the following ways:
     export TF_VAR_BORDER0_TF_TOKEN="ey...9Iw"
     ```
 
-#### 6. Initialize and apply Terraform:
+#### 4. Initialize and apply Terraform:
 ```
 terraform init
 ```
@@ -44,7 +46,8 @@ Once the Terraform module is done the Output will show the following:
 Outputs:
 
 everything = {
-  "You can now run your CLI script" = "./runme.sh"
+  "To start the connector" = "border0 connector start --config ./border0.yaml"
+  "You can view your connector here:" = "https://portal.border0.com/connector/81cd9c5c-ea4d-41e3-b5fe-299955411b7f"
 }
 ```
 Freel free to explore your brand new Border0 infrastructure by running the `./runme.sh` script<br>
@@ -54,7 +57,7 @@ At the same time can navigate to the Border0 Portal and see the newly created in
 - [Admin Portal](https://portal.border0.com/mysockets)
 [![Admin Portal](admin-portal.png)](https://portal.border0.com)
 
-#### 7. Perform a cleanup for Terraform:
+#### 5. Perform a cleanup for Terraform:
 ```
 terraform destroy
 ```
