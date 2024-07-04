@@ -14,7 +14,7 @@ Before we get started, make sure you have the following:
 > **Caution:** This code creates resources in your AWS account! Once you are finished testing, remove these resources to prevent unnecessary AWS costs. You can delete resources manually or with `terraform destroy`.
 
 ## Terraform Module Diagram
-![Terraform Module Diagram](diagram.png)
+![Terraform Module Diagram](/img/diagram.png)
 ## Running the Border0 Terraform example
 We will be creating a Border0 enabled infrastructure in AWS with the following resources:
 - VPC
@@ -87,9 +87,9 @@ terraform plan && terraform apply
 ```
 Once the Terraform module is done you can navigate to the Border0 Portal and see the newly created infrastructure:
 - [Client Portal](https://client.border0.com/#/login)
-[![Client Portal](client-portal.png)](https://client.border0.com)
+[![Client Portal](/img/client-portal.png)](https://client.border0.com)
 - [Admin Portal](https://portal.border0.com/mysockets)
-[![Admin Portal](admin-portal.png)](https://portal.border0.com)
+[![Admin Portal](/img/admin-portal.png)](https://portal.border0.com)
 
 #### 8. Optionally, run cleanup for Terraform module:
 ```
