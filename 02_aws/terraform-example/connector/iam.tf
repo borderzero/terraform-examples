@@ -208,9 +208,6 @@ resource "aws_iam_role_policy" "connector_SSMConsole" {
 EOF
 }
 
-# ssh_ssm: failed to start ssm session: operation error SSM: StartSession, https response error StatusCode: 400, RequestID: 23abf47c-5be2-4833-a0b2-3cb349a12192, api error AccessDeniedException: User: 
-# arn:aws:sts::937166400989:assumed-role/border0-terraform-example-connector-role/i-0d2d9ff36efcb7715 is not authorized to perform: ssm:StartSession on resource: arn:aws:ssm:ca-central-1:937166400989:document/SSM-SessionManagerRunShell because no identity-based policy allows the ssm:StartSession action
-
 # IAM Role
 resource "aws_iam_role" "border0-connector-role" {
   name = var.prefix != "" ? "${var.prefix}-connector-role" : "Border0-example-connector-role"
