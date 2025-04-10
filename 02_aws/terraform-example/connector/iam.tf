@@ -191,7 +191,7 @@ resource "aws_iam_role_policy" "connector_SSMConsole" {
     {
       "Action" : ["ssm:StartSession", "ssm:TerminateSession", "ssm:ResumeSession"],
       "Effect" : "Allow",
-      "Resource" : ["arn:aws:ec2:*:*:instance/*", "arn:aws:ecs:*:*:task/*"]
+      "Resource" : ["arn:aws:ec2:*:*:instance/*", "arn:aws:ecs:*:*:task/*", "arn:aws:ssm:*:*:document/SSM-SessionManagerRunShell"]
     },
     {
       "Action" : ["ssm:UpdateInstanceInformation"],
