@@ -14,7 +14,7 @@ provider "border0" {
 
 output "everything" {
   value = {
-    "To start the connector using cli"  = "border0 connector start --config ${path.module}/border0.yaml"
+    "To start the connector using cli"  = "sudo border0 connector start --config ${path.module}/border0.yaml"
     "You can view your connector here:" = "https://portal.border0.com/connector/${border0_connector.first-connector.id}"
   }
 }
