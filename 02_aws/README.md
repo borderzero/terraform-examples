@@ -5,7 +5,7 @@ We have automated creating a Border0-enabled infrastructure as a great way to ge
 ## prerequisites prep and assumptions
 Before we get started, make sure you have the following:
 
-1. [Border0 Account](https://docs.border0.com/docs/signup) and a Border0 [API Token](https://docs.border0.com/docs/creating-access-token). We recommend you create a token of type [Member](https://portal.border0.com/organizations/current?tab=new_token)
+1. [Border0 Account](https://docs.border0.com/docs/signup) and a Border0 [API Token](https://docs.border0.com/docs/service-accounts). We recommend you create a [Member](https://docs.border0.com/docs/service-accounts#tokens-and-service-accounts) Service account and token within it.
 
 2. AWS Account, Access Key and Secret, you can create them here: [AWS Access Keys](https://console.aws.amazon.com/iam/home?#/security_credentials)
 
@@ -39,7 +39,7 @@ cd terraform-examples/02_aws
 ```
 #### 3. Border0 Credentials Setup
 
-Once you create your Border0 account and API [Member Token](https://portal.border0.com/organizations/current?tab=new_token) you can set it up in one of the following ways:
+Once you create your Border0 Service Account and API [Token](https://portal.border0.com/iam?tab=service-accounts) you can set it up in one of the following ways:
 
 Os Environment Variables
 ```
@@ -47,7 +47,7 @@ export BORDER0_TOKEN="ey...9Iw"
 ```
 or 
 
-Update the ``variables.tf`` file variable ``BORDER0_TOKEN`` to your Border0 API [Member Token](https://portal.border0.com/organizations/current?tab=new_token)
+Update the ``variables.tf`` file variable ``BORDER0_TOKEN`` to your Border0 API [Token](https://portal.border0.com/iam?tab=service-accounts)
 
 #### 4. Border0 Policy Setup
 
