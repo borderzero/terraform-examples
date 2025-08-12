@@ -6,7 +6,7 @@ resource "border0_socket" "playground_http" {
   recording_enabled = false
   name              = "playground-http"
   socket_type       = "http"
-  connector_id      = border0_connector.first-connector.id
+  connector_ids     = [border0_connector.first-connector.id]
   description       = "My playground HTTP socket"
 
   http_configuration {
@@ -24,7 +24,7 @@ resource "border0_socket" "playground_ssh" {
   recording_enabled = false
   name              = "playground-ssh"
   socket_type       = "ssh"
-  connector_id      = border0_connector.first-connector.id
+  connector_ids     = [border0_connector.first-connector.id]
   description       = "My playground SSH socket"
 
   ssh_configuration {
@@ -45,7 +45,7 @@ resource "border0_socket" "playground_mysql" {
   recording_enabled = false
   name              = "playground-mysql"
   socket_type       = "database"
-  connector_id      = border0_connector.first-connector.id
+  connector_ids     = [border0_connector.first-connector.id]
   description       = "My playground MySQL socket"
 
   database_configuration {

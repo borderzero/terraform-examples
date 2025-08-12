@@ -6,7 +6,7 @@ variable "account_owner_email" {
 variable "create_default_policy" {
   description = "This variable controlls the creation of a org wide default policy identical to the default one"
   type        = bool
-  default     = false # set this to true to create a default policy
+  default     = true # set this to false to skip creating a default policy
 }
 
 

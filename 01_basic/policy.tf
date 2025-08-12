@@ -8,7 +8,7 @@ variable "user_account_email" {
 variable "create_custom_policy" {
   description = "This variable controlls the creation of a custom policy"
   type        = bool
-  default     = false # set this to true to create a custom policy
+  default     = true # set this to false to skip createing a custom policy
 }
 
 resource "border0_policy_attachment" "playground_http_to_client-policy" {
