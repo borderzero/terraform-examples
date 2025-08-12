@@ -1,7 +1,7 @@
 # create connector 
 resource "border0_connector" "first-connector" {
-  name                         = "first-connector"
-  description                  = "My first connector created from terraform"
+  name        = "first-connector"
+  description = "My first connector created from terraform"
 }
 
 # create connector token
