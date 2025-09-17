@@ -139,16 +139,23 @@ data "border0_policy_v2_document" "my_v2_tf_access_policy_doc" {
 
   condition {
     who {
-      email = [var.user_account_email]
+      email           = [var.user_account_email]
+      group           = []
+      service_account = []
     }
     where {
       allowed_ip = [
         "0.0.0.0/0",
         "::/0",
       ]
+      country     = []
+      country_not = []
     }
     when {
-      after = "2022-02-02T22:22:22Z"
+      after              = "2022-02-02T22:22:22Z"
+      before             = null
+      time_of_day_after  = null
+      time_of_day_before = null
     }
   }
 }
